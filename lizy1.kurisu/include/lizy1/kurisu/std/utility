@@ -1,0 +1,16 @@
+#pragma once
+
+
+// Lizy1 - Kurisu - Kurisu Support for Std Header <utility>
+// Copyright (c) 2020 Li Zhongyuan
+// SPDX-License-Identifier: MIT
+
+
+#include "impl/tuple_like.h"
+#include <utility>
+
+
+template<class T, class U> struct lizy1::kurisu::Case<std::pair<T, U>>
+    :lizy1::kurisu::impl_K::TupleLike<std::pair<T, U>>
+{
+};

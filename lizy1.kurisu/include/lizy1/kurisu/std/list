@@ -1,0 +1,51 @@
+#pragma once
+
+
+// Lizy1 - Kurisu - Kurisu Support for Std Header <list>
+// Copyright (c) 2020 Li Zhongyuan
+// SPDX-License-Identifier: MIT
+
+
+/*!
+note Similar to set_like
+construct
+    Only from default constructor (eg. std::list<int>::list())
+    Construct then emplace_back(E&&)
+    Suppress Kurisu Default Construct
+*/
+
+
+#include "impl/string_like.h"
+#include <list>
+
+
+namespace lizy1 { namespace kurisu { namespace impl_K {
+
+
+    template<class C, class E, bool> struct List_Load_And_Construct { static void __construct__(std::istream &); };  // suppress Kurisu Default Construct
+
+
+}}}
+
+
+template<class C, class E> struct lizy1::kurisu::impl_K::List_Load_And_Construct<C, E, true>
+{
+    static void __load__(std::istream &is, C &c) { c = __construct__(is); }
+
+    static C __construct__(std::istream &is)
+    {
+        std::size_t size;
+        load(is, size);
+        C ret;
+        for(std::size_t i = 0; i < size; i++)
+            ret.emplace_back(construct<E>(is));
+        return ret;
+    }
+};
+
+
+template<class T, class A> struct lizy1::kurisu::Case<std::list<T, A>>
+    :lizy1::kurisu::impl_K::StringLike_Dump<std::list<T, A>, lizy1::kurisu::IsDumpable<T>::value>,
+     lizy1::kurisu::impl_K::List_Load_And_Construct<std::list<T, A>, T, lizy1::kurisu::IsConstructible<T>::value>
+{
+};

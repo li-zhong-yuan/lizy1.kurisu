@@ -1,0 +1,22 @@
+#pragma once
+
+
+// Lizy1 - Kurisu - Kurisu Support for Std Header <set>
+// Copyright (c) 2020 Li Zhongyuan
+// SPDX-License-Identifier: MIT
+
+
+#include "impl/set_like.h"
+#include <set>
+
+
+template<class K, class C, class A> struct lizy1::kurisu::Case<std::set<K, C, A>>
+    :lizy1::kurisu::impl_K::SetLike<std::set<K, C, A>, K>
+{
+};
+
+
+template<class K, class C, class A> struct lizy1::kurisu::Case<std::multiset<K, C, A>>
+    :lizy1::kurisu::impl_K::SetLike<std::multiset<K, C, A>, K>
+{
+};

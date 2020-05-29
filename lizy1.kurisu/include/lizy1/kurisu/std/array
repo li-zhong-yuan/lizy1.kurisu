@@ -1,0 +1,31 @@
+#pragma once
+
+
+// Lizy1 - Kurisu - Kurisu Support for Std Header <array>
+// Copyright (c) 2020 Li Zhongyuan
+// SPDX-License-Identifier: MIT
+// Use Kurisu Default Construct
+
+
+#include <lizy1/kurisu.h>
+#include <array>
+
+
+namespace lizy1 { namespace kurisu { namespace impl_K {
+
+
+    template<class A, bool> struct Array_Load      {};
+    template<class A, bool> struct Array_Dump      {};
+    template<class A>       struct Array_Load<A, true> { static void __load__(std::istream &is, A       &array) { for(auto &item : array) load(is, item); } };
+    template<class A>       struct Array_Dump<A, true> { static void __dump__(std::ostream &os, A const& array) { for(auto &item : array) dump(os, item); } };
+
+
+}}}
+
+
+template<class T, std::size_t N>
+struct lizy1::kurisu::Case<std::array<T, N>>
+    :lizy1::kurisu::impl_K::Array_Load<std::array<T, N>, lizy1::kurisu::IsLoadable<T>::value>,
+     lizy1::kurisu::impl_K::Array_Dump<std::array<T, N>, lizy1::kurisu::IsDumpable<T>::value>
+{
+};

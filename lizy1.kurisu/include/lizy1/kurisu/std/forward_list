@@ -1,0 +1,67 @@
+#pragma once
+
+
+// Lizy1 - Kurisu - Kurisu Support for Std Header <forward_list>
+// Copyright (c) 2020 Li Zhongyuan
+// SPDX-License-Identifier: MIT
+
+
+/*!
+note Similar to list
+construct
+    Only from default constructor (eg. std::forward_list<int>::forward_list())
+    Construct then emplace_after(E&&)
+    Suppress Kurisu Default Construct
+*/
+
+
+#include <lizy1/kurisu.h>
+#include <forward_list>
+
+
+namespace lizy1 { namespace kurisu { namespace impl_K {
+
+
+    template<class C, bool>          struct ForwardList_Dump {};
+    template<class C, class E, bool> struct ForwardList_Load_And_Construct { static void __construct__(std::istream &); };  // suppress Kurisu Default Construct
+
+
+}}}
+
+
+template<class C> struct lizy1::kurisu::impl_K::ForwardList_Dump<C, true>
+{
+    static void __dump__(std::ostream& os, C const& value)
+    {
+        std::size_t size = 0;
+        for(auto &x : value)
+            size++;
+        dump(os, size);
+        for (auto &x : value)
+            dump(os, x);
+    }
+};
+
+
+template<class C, class E> struct lizy1::kurisu::impl_K::ForwardList_Load_And_Construct<C, E, true>
+{
+    static void __load__(std::istream &is, C &c) { c = __construct__(is); }
+
+    static C __construct__(std::istream &is)
+    {
+        std::size_t size;
+        load(is, size);
+        C ret;
+        auto iter = ret.before_begin();
+        for(std::size_t i = 0; i < size; i++)
+            iter = ret.emplace_after(iter, construct<E>(is));
+        return ret;
+    }
+};
+
+
+template<class T, class A> struct lizy1::kurisu::Case<std::forward_list<T, A>>
+    :lizy1::kurisu::impl_K::ForwardList_Dump<std::forward_list<T, A>, lizy1::kurisu::IsDumpable<T>::value>,
+     lizy1::kurisu::impl_K::ForwardList_Load_And_Construct<std::forward_list<T, A>, T, lizy1::kurisu::IsConstructible<T>::value>
+{
+};

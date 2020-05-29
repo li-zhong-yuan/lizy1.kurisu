@@ -1,0 +1,22 @@
+#pragma once
+
+
+// Lizy1 - Kurisu - Kurisu Support for Std Header <unordered_map>
+// Copyright (c) 2020 Li Zhongyuan
+// SPDX-License-Identifier: MIT
+
+
+#include "impl/set_like.h"
+#include <unordered_map>
+
+
+template<class K, class T, class H, class C, class A> struct lizy1::kurisu::Case<std::unordered_map<K, T, H, C, A>>
+    :lizy1::kurisu::impl_K::SetLike<std::unordered_map<K, T, H, C, A>, typename std::unordered_map<K, T, H, C, A>::value_type>
+{
+};
+
+
+template<class K, class T, class H, class C, class A> struct lizy1::kurisu::Case<std::unordered_multimap<K, T, H, C, A>>
+    :lizy1::kurisu::impl_K::SetLike<std::unordered_multimap<K, T, H, C, A>, typename std::unordered_multimap<K, T, H, C, A>::value_type>
+{
+};

@@ -1,0 +1,16 @@
+#pragma once
+
+
+// Lizy1 - Kurisu - Kurisu Support for Std Header <deque>
+// Copyright (c) 2020 Li Zhongyuan
+// SPDX-License-Identifier: MIT
+
+
+#include "impl/string_like.h"
+#include <deque>
+
+
+template<class T, class A> struct lizy1::kurisu::Case<std::deque<T, A>>
+    :lizy1::kurisu::impl_K::StringLike<std::deque<T, A>, T>
+{
+};

@@ -1,0 +1,16 @@
+#pragma once
+
+
+// Lizy1 - Kurisu - Kurisu Support for Std Header <vector>
+// Copyright (c) 2020 Li Zhongyuan
+// SPDX-License-Identifier: MIT
+
+
+#include "impl/string_like.h"
+#include <vector>
+
+
+template<class T, class A> struct lizy1::kurisu::Case<std::vector<T, A>>
+    :lizy1::kurisu::impl_K::StringLike<std::vector<T, A>, T>
+{
+};

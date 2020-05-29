@@ -1,0 +1,4 @@
+@PACKAGE_INIT@
+
+
+include("${CMAKE_CURRENT_LIST_DIR}/@NAME_LIB_MAIN@-installation.cmake")

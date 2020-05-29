@@ -1,0 +1,22 @@
+#pragma once
+
+
+// Lizy1 - Kurisu - Kurisu Support for Std Header <map>
+// Copyright (c) 2020 Li Zhongyuan
+// SPDX-License-Identifier: MIT
+
+
+#include "impl/set_like.h"
+#include <map>
+
+
+template<class K, class T, class C, class A> struct lizy1::kurisu::Case<std::map<K, T, C, A>>
+    :lizy1::kurisu::impl_K::SetLike<std::map<K, T, C, A>, typename std::map<K, T, C, A>::value_type>
+{
+};
+
+
+template<class K, class T, class C, class A> struct lizy1::kurisu::Case<std::multimap<K, T, C, A>>
+    :lizy1::kurisu::impl_K::SetLike<std::multimap<K, T, C, A>, typename std::multimap<K, T, C, A>::value_type>
+{
+};

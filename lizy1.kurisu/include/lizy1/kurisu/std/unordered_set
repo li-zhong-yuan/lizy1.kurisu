@@ -1,0 +1,22 @@
+#pragma once
+
+
+// Lizy1 - Kurisu - Kurisu Support for Std Header <unordered_set>
+// Copyright (c) 2020 Li Zhongyuan
+// SPDX-License-Identifier: MIT
+
+
+#include "impl/set_like.h"
+#include <unordered_set>
+
+
+template<class K, class H, class C, class A> struct lizy1::kurisu::Case<std::unordered_set<K, H, C, A>>
+    :lizy1::kurisu::impl_K::SetLike<std::unordered_set<K, H, C, A>, K>
+{
+};
+
+
+template<class K, class H, class C, class A> struct lizy1::kurisu::Case<std::unordered_multiset<K, H, C, A>>
+    :lizy1::kurisu::impl_K::SetLike<std::unordered_multiset<K, H, C, A>, K>
+{
+};

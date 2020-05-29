@@ -1,0 +1,49 @@
+#pragma once
+
+
+// Lizy1 - Kurisu - Kurisu Support for Std Header <stdexcept>
+// Copyright (c) 2020 Li Zhongyuan
+// SPDX-License-Identifier: MIT
+
+
+#include "string"
+#include <stdexcept>
+
+
+namespace lizy1 { namespace kurisu { namespace impl_K {
+
+
+    template<class T> struct StdException_Simple;
+    template<class T> struct StdException_Normal;
+    template<class T> struct StdException_System;
+
+
+}}}
+
+
+template<class T> struct lizy1::kurisu::impl_K::StdException_Simple
+{
+    static void __load__(std::istream &is, T      & e) { construct<std::string>(is); }
+    static void __dump__(std::ostream &os, T const& e) { dump(os, std::string(e.what())); }
+    static T __construct__(std::istream &is)           { return construct<std::string>(is), T(); }
+};
+
+
+template<class T> struct lizy1::kurisu::impl_K::StdException_Normal
+{
+    static void __load__(std::istream &is, T      & e) { e = __construct__(is); }
+    static void __dump__(std::ostream &os, T const& e) { dump(os, std::string(e.what())); }
+    static T __construct__(std::istream &is)           { return T(construct<std::string>(is)); }
+};
+
+
+template<> struct lizy1::kurisu::Case<std::exception>        :lizy1::kurisu::impl_K::StdException_Simple<std::exception> {};
+template<> struct lizy1::kurisu::Case<std::logic_error>      :lizy1::kurisu::impl_K::StdException_Normal<std::logic_error> {};
+template<> struct lizy1::kurisu::Case<std::invalid_argument> :lizy1::kurisu::impl_K::StdException_Normal<std::invalid_argument> {};
+template<> struct lizy1::kurisu::Case<std::domain_error>     :lizy1::kurisu::impl_K::StdException_Normal<std::domain_error> {};
+template<> struct lizy1::kurisu::Case<std::length_error>     :lizy1::kurisu::impl_K::StdException_Normal<std::length_error> {};
+template<> struct lizy1::kurisu::Case<std::out_of_range>     :lizy1::kurisu::impl_K::StdException_Normal<std::out_of_range> {};
+template<> struct lizy1::kurisu::Case<std::runtime_error>    :lizy1::kurisu::impl_K::StdException_Normal<std::runtime_error> {};
+template<> struct lizy1::kurisu::Case<std::range_error>      :lizy1::kurisu::impl_K::StdException_Normal<std::range_error> {};
+template<> struct lizy1::kurisu::Case<std::overflow_error>   :lizy1::kurisu::impl_K::StdException_Normal<std::overflow_error> {};
+template<> struct lizy1::kurisu::Case<std::underflow_error>  :lizy1::kurisu::impl_K::StdException_Normal<std::underflow_error> {};

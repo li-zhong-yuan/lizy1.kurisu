@@ -245,19 +245,22 @@ int main()
 Interfaces exposed by this library also include meta support for diagnosing Kurisu Support for a given type at compile time.
 
 ```cpp
+#include <lizy1/kurisu/std/vector>
+
 using lizy1::kurisu::IsLoadable;
 using lizy1::kurisu::IsDumpable;
 using lizy1::kurisu::IsConstructible;
-    
+
 static_assert(IsLoadable<unsigned[5]>::value, "");         // IsLoadable<unsigned[5]> yields to std::true_type
 // static_assert(IsLoadable<std::string>::value, "");      // ERROR, Case<std::string> is not complete, won't compile
+static_assert(IsLoadable<std::vector<bool>>::value, "");   // OK, Case<std::vector<bool>> is a complete type
 static_assert(IsDumpable<int, float, double>::value, "");  // IsDumpable<int, float, double> yields to std::true_type
 static_assert(!IsConstructible<unsigned[5]>::value, "");   // IsLoadable<unsigned[5]> yields to std::false_type
 ```
 
 ### Error Handling
 
-This library achieves error handling using C++ Exceptions. All exceptions defined by this library:
+This library does error handling by using C++ Exceptions. The following are all exceptions defined by this library:
 
 - `KurisuException`: This is the base class of all other exceptions defined by Kurisu.
 

@@ -3,9 +3,9 @@ Serialization & Deserialization Library for C++11
 
 - [Features](#Features)
 - [Function](#Function)
-  - [Serializing & Deserialing Fundamental Types, Enums and Arrays](#Serializing-&-Deserialing-Fundamental-Types-Enums-and-Arrays)
-  - [Serializing & Deserialing Class Types](#Serializing-&-Deserialing-Class-Types)
-  - [Kurisu Support for C++ Standard Library](#Kurisu-Support-for-C++-Standard-Library)
+  - [Serializing & Deserialing Fundamental Types, Enums and Arrays](#Serializing--Deserialing-Fundamental-Types-Enums-and-Arrays)
+  - [Serializing & Deserialing Class Types](#Serializing--Deserialing-Class-Types)
+  - [Kurisu Support for C++ Standard Library](#Kurisu-Support-for-C-Standard-Library)
   - [Meta Support](#Meta-Support)
   - [Error Handling](#Error-Handling)
 

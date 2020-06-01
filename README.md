@@ -251,11 +251,11 @@ using lizy1::kurisu::IsLoadable;
 using lizy1::kurisu::IsDumpable;
 using lizy1::kurisu::IsConstructible;
 
-static_assert(IsLoadable<unsigned[5]>::value, "");         // IsLoadable<unsigned[5]> yields to std::true_type
+static_assert(IsLoadable<unsigned[5]>::value, "");         // IsLoadable<unsigned[5]> yields std::true_type
 // static_assert(IsLoadable<std::string>::value, "");      // ERROR, Case<std::string> is not complete, won't compile
 static_assert(IsLoadable<std::vector<bool>>::value, "");   // OK, Case<std::vector<bool>> is a complete type
-static_assert(IsDumpable<int, float, double>::value, "");  // IsDumpable<int, float, double> yields to std::true_type
-static_assert(!IsConstructible<unsigned[5]>::value, "");   // IsLoadable<unsigned[5]> yields to std::false_type
+static_assert(IsDumpable<int, float, double>::value, "");  // IsDumpable<int, float, double> yields std::true_type
+static_assert(!IsConstructible<unsigned[5]>::value, "");   // IsLoadable<unsigned[5]> yields std::false_type
 ```
 
 ### Error Handling

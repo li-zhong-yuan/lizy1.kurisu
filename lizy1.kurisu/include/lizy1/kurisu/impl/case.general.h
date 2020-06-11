@@ -56,7 +56,7 @@ protected:
     static_assert(bA::value, "Case_General_Deduce<T>: lizy1::kurisu requires that T is not const, not volatile, and not reference");
     static_assert(bC::value, "Case_General_Deduce<T>: lizy1::kurisu requires that T is complete");
 
-/// Output
+    /// Output
 public:
     using type_case = eD;
     static constexpr bool is_loadable          = bA::value && bC::value && bF::value;

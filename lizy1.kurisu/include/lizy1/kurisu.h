@@ -96,9 +96,9 @@ namespace lizy1 { namespace kurisu {
 namespace lizy1 { namespace kurisu {
 
 
-    template<class... Ts, class = impl_K::_If<IsLoadable<Ts...>::value>> void load(std::istream &is, Ts      &... values);  // thread-safe, instant, raise<LoadException>
-    template<class... Ts, class = impl_K::_If<IsDumpable<Ts...>::value>> void dump(std::ostream &os, Ts const&... values);  // thread-safe, instant, raise<DumpException>
-    template<class T, class = impl_K::_If<IsConstructible<T>::value>>    T construct(std::istream &is);                     // thread-safe, instant, raise<LoadException>
+    template<class... Ts, class = impl_K::_If<IsLoadable<Ts...>::value>> inline void load(std::istream &is, Ts      &... values);  // thread-safe, instant, raise<LoadException>
+    template<class... Ts, class = impl_K::_If<IsDumpable<Ts...>::value>> inline void dump(std::ostream &os, Ts const&... values);  // thread-safe, instant, raise<DumpException>
+    template<class T, class = impl_K::_If<IsConstructible<T>::value>>    inline T construct(std::istream &is);                     // thread-safe, instant, raise<LoadException>
 
 
 }}

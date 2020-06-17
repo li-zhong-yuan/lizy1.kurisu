@@ -24,7 +24,7 @@ namespace lizy1 { namespace kurisu { namespace impl_K {
     template<int, class P, class...>  struct TupleLike_;
     template<bool, class P, class>    struct TupleLike_Load                     {};
     template<bool, class P, class>    struct TupleLike_Dump                     {};
-    template<bool, class P, class...> struct TupleLike_Construct                { static void __construct__(std::istream &); };  // suppress Kurisu Default Construct
+    template<bool, class P, class...> struct TupleLike_Construct                { static void __construct__(std::istream &) {}; };  // suppress Kurisu Default Construct
     template<class T, class... Ts>    struct TupleLike_Deduce<T, Ts...>         { static constexpr int category = TupleLike_Deduce<Ts...>::category; };
     template<class T, class... Ts>    struct TupleLike_Deduce<const T, Ts...>   { static constexpr int category = tuple_like_category_no_load | TupleLike_Deduce<Ts...>::category; };
     template<class T, class... Ts>    struct TupleLike_Deduce<T &, Ts...>       { static constexpr int category = tuple_like_category_no_construct | TupleLike_Deduce<Ts...>::category; };

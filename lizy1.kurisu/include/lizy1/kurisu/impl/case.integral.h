@@ -1,8 +1,8 @@
 namespace lizy1 { namespace kurisu { namespace impl_K {
 
 
-    template<class T, class U> void case_integral_msvc_c4800(T t, U    &u) { u = static_cast<U>(t); }
-    template<class T>          void case_integral_msvc_c4800(T t, bool &b) { b = t != 0; }
+    template<class T, class U> inline void case_integral_msvc_c4800(T t, U    &u) { u = static_cast<U>(t); }
+    template<class T>          inline void case_integral_msvc_c4800(T t, bool &b) { b = t != 0; }
 
 
     template<class T, bool> struct Case_Integral_ :_mf {};

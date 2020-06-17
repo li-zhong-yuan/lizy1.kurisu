@@ -1,6 +1,7 @@
 // File lizy1.kurisu/example/example.basic.cpp
 
 #include <lizy1/kurisu.h>  // include the core of Lizy1.Kurisu
+#include <stdio.h>
 #include <cstdint>         // because we use std::int16_t
 #include <sstream>
 
@@ -52,6 +53,26 @@ int main()
         char array_char_v[13] = {};
         char array_array_char_v[2][7] = {};
         load(is, array_char_v, array_array_char_v);      // OK, works
+        printf(
+            "char_v               : %c\n"
+            "int_v                : %d\n"
+            "int16_v              : %d\n"
+            "float_v              : %f\n"
+            "double_v             : %f\n"
+            "ea_v == EA::C        : %s\n"
+            "array_char_v         : \"%s\"\n"
+            "array_array_char_v[0]: \"%s\"\n"
+            "array_array_char_v[1]: \"%s\"\n",
+            char_v,
+            int_v,
+            static_cast<int>(int16_v),
+            float_v,
+            double_v,
+            ea_v == EA::C ? "true" : "false",
+            array_char_v,
+            array_array_char_v[0],
+            array_array_char_v[1]
+        );
     }
     return 0;
 }

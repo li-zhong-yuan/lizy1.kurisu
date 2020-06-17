@@ -13,6 +13,7 @@
 #include <lizy1/kurisu/std/vector>
 #include <lizy1/kurisu/std/stdexcept>
 #include <utility>
+#include <memory>
 #include <sstream>
 
 
@@ -58,19 +59,19 @@ int main()
         using T = std::pair<float, Obj1>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { 3.0f, -5 };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t = { 1.0f, -3 };
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// tuple - Obj1
@@ -78,19 +79,19 @@ int main()
         using T = std::tuple<float, Obj1, float, Obj1>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { 3.0f, -5, 4.0f, -9 };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t = { 1.0f, -2, 5.0f, -9122 };
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// tuple - Obj2
@@ -98,19 +99,19 @@ int main()
         using T = std::tuple<float, Obj2, float, Obj2>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { 3.0f, -5, 4.0f, -9 };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t = { 1.0f, -2, 5.0f, -9122 };
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// tuple - Empty
@@ -118,19 +119,19 @@ int main()
         using T = std::tuple<>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t{};
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t{};
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// tuple - no_load
@@ -138,17 +139,17 @@ int main()
         using T = std::tuple<float, const double, bool>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { 3.0f, 4.0f, true };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
             static_assert(!IsLoadable<T>::value, "");
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// tuple - no_construct
@@ -157,16 +158,16 @@ int main()
         std::string str;
         float f = 7.0f;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { std::move(f), 4.0f, true };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             float f = 999.0f;
             T t = { std::move(f), 888.0f, false };
-            load(is, t);
+            load(*is, t);
         }
         {
             static_assert(!IsConstructible<T>::value, "");
@@ -178,10 +179,10 @@ int main()
         std::string str;
         float f = 7.0f;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { std::move(f), 4.0f, true };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
             static_assert(!IsLoadable<T>::value, "");
@@ -195,19 +196,19 @@ int main()
         using T = std::string;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = "aabbcc";
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t;
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// wstring
@@ -215,19 +216,19 @@ int main()
         using T = std::wstring;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = L"aabbcc";
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t;
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// dequeue<string>
@@ -235,19 +236,19 @@ int main()
         using T = std::deque<std::string>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { "ab", "cd", "ef" };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t;
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// vector<string>
@@ -255,19 +256,19 @@ int main()
         using T = std::vector<std::string>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { "ab", "cd", "ef" };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t;
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// set<string>
@@ -275,19 +276,19 @@ int main()
         using T = std::set<std::string>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { "ab", "cd", "ef" };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t;
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// multiset<string>
@@ -295,19 +296,19 @@ int main()
         using T = std::multiset<std::string>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { "ab", "cd", "ef", "ab", "ef" };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t;
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// map<string, const string>
@@ -315,19 +316,19 @@ int main()
         using T = std::map<std::string, const std::string>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { {"ab", "cd"}, {"ef", "gh"} };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t;
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// unordered_set<string>
@@ -335,19 +336,19 @@ int main()
         using T = std::unordered_set<std::string>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { "ab", "cd", "ef" };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t;
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// unordered_map<string, const string>
@@ -355,19 +356,19 @@ int main()
         using T = std::unordered_map<std::string, const std::string>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { {"ab", "cd"}, {"ef", "gh"} };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t;
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// list<string>
@@ -375,19 +376,19 @@ int main()
         using T = std::list<std::string>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { "ab", "cd", "ef" };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t;
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// forward_list<string>
@@ -395,19 +396,19 @@ int main()
         using T = std::forward_list<std::string>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { "ab", "cd", "ef" };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t;
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// array - Obj1
@@ -415,15 +416,15 @@ int main()
         using T = std::array<Obj1, 3>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { 1, 2, 3 };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t = { 0, 0, 0 };
-            load(is, t);
+            load(*is, t);
         }
         {
             static_assert(!IsConstructible<T>::value, "");
@@ -434,19 +435,19 @@ int main()
         using T = std::array<Obj2, 3>;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t = { 1, 2, 3 };
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t = { 0, 0, 0 };
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// exception - std::exception
@@ -454,19 +455,19 @@ int main()
         using T = std::exception;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t;
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t;
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     /// exception - std::logic_error
@@ -474,19 +475,19 @@ int main()
         using T = std::logic_error;
         std::string str;
         {
-            std::ostringstream os;
+            std::unique_ptr<std::ostringstream> os(new std::ostringstream());
             T t("This is logic_error");
-            dump(os, t);
-            str = os.str();
+            dump(*os, t);
+            str = os->str();
         }
         {
-            std::istringstream is(str);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
             T t("");
-            load(is, t);
+            load(*is, t);
         }
         {
-            std::istringstream is(str);
-            T t = construct<T>(is);
+            std::unique_ptr<std::istringstream> is(new std::istringstream(str));
+            T t = construct<T>(*is);
         }
     }
     return 0;

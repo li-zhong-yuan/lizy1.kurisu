@@ -17,7 +17,7 @@ namespace lizy1 { namespace kurisu { namespace impl_K {
 
     template<class C, class E> struct StringLike;
     template<class C, bool>    struct StringLike_Dump               {};
-    template<class C, bool>    struct StringLike_Load_And_Construct { static void __construct__(std::istream &); };  // suppress Kurisu Default Construct
+    template<class C, bool>    struct StringLike_Load_And_Construct { static void __construct__(std::istream &) {}; };  // suppress Kurisu Default Construct
 
 
 }}}

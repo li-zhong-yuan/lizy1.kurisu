@@ -2,14 +2,14 @@ namespace lizy1 { namespace kurisu { namespace impl_K {
 
 
     inline bool is_little_endian();
-    template<typename T> T load_machine_bytes(std::istream &is);                     // thread-safe, instant, raise<LoadException>
-    template<typename T> void dump_machine_bytes(std::ostream &os, T const& value);  // thread-safe, instant, raise<>
+    template<typename T> inline T load_machine_bytes(std::istream &is);                     // thread-safe, instant, raise<LoadException>
+    template<typename T> inline void dump_machine_bytes(std::ostream &os, T const& value);  // thread-safe, instant, raise<>
 
 
 }}}
 
 
-inline bool lizy1::kurisu::impl_K::is_little_endian()
+bool lizy1::kurisu::impl_K::is_little_endian()
 {
     unsigned i = 1;
     return *reinterpret_cast<char *>(&i) != 0;

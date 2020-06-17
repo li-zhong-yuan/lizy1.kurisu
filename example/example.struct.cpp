@@ -1,6 +1,7 @@
 // File lizy1.kurisu/example/example.struct.cpp
 
 #include <lizy1/kurisu.h>
+#include <stdio.h>
 #include <sstream>
 
 using lizy1::kurisu::load;
@@ -37,12 +38,30 @@ int main()
         std::istringstream is(binary_result);
         ExampleStruct example_struct;
         load(is, example_struct);
+        printf(
+            "Deserializing: \n"
+            "    d1: %d\n"
+            "    d2: %ld\n"
+            "    d3: %f\n",
+            example_struct.d1,
+            example_struct.d2,
+            example_struct.d3
+        );
     }
     /// Constructing
     {
         std::istringstream is(binary_result);
         ExampleStruct example_struct = construct<ExampleStruct>(is);
                                      // OK, Kurisu calls ExampleStruct::ExampleStruct(), then load()
+        printf(
+            "Constructing: \n"
+            "    d1: %d\n"
+            "    d2: %ld\n"
+            "    d3: %f\n",
+            example_struct.d1,
+            example_struct.d2,
+            example_struct.d3
+        );
     }
     return 0;
 }
